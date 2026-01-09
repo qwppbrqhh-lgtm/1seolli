@@ -5,8 +5,8 @@
     --neon-cyan: #00f3ff;
     --neon-pink: #bc13fe;
     --glass-bg: rgba(10, 10, 10, 0.6);
-    --glass-border: rgba(0, 243, 255, 0.2);
-    --font-heading: 'Outfit', sans-serif;
+    --glass-border: rgba(0, 243, 255, 0.3);
+    --font-heading: 'Orbitron', sans-serif;
     --font-body: 'Zen Kaku Gothic New', sans-serif;
 }
 
@@ -22,14 +22,225 @@ body {
     font-family: var(--font-body);
     overflow-x: hidden;
     scroll-behavior: smooth;
+    /* Cyber grid background */
     background-image:
-        linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-    background-size: 30px 30px;
+        linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
     background-position: center top;
+    animation: moveGrid 20s linear infinite;
 }
 
-/* Scanline Overlay */
+@keyframes moveGrid {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 500px;
+    }
+}
+
+/* HUD Overlay */
+.hud-overlay {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    border: 1px solid rgba(0, 243, 255, 0.05);
+}
+
+.hud-btn {
+    pointer-events: auto;
+    background: transparent;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    padding: 8px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+    transition: all 0.3s;
+}
+
+.hud-btn:hover {
+    background: var(--neon-cyan);
+    color: #000;
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* Boot Screen */
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+    color: var(--neon-cyan);
+}
+
+.boot-container {
+    width: 300px;
+    text-align: left;
+}
+
+.boot-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--neon-cyan);
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.boot-text {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    height: 150px;
+    overflow: hidden;
+    opacity: 0.8;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+}
+
+.boot-progress {
+    width: 100%;
+    height: 2px;
+    background: #111;
+    position: relative;
+    overflow: hidden;
+}
+
+.boot-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    transition: width 0.1s linear;
+}
+
+/* Main Content Visibility */
+#main-content {
+    opacity: 1;
+    transition: opacity 2s ease-in;
+    filter: blur(0);
+}
+
+#main-content.hidden {
+    opacity: 0;
+    filter: blur(10px);
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    /* Prevent scrolling during boot */
+}
+
+/* 3D Tilt Context */
+.hero,
+.video-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.hero-avatar,
+.hero-title,
+.video-card {
+    transition: transform 0.1s ease-out;
+    /* Smooth follow */
+}
+
+.hud-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.top-left {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.top-right {
+    top: -2px;
+    right: -2px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.bottom-left {
+    bottom: -2px;
+    left: -2px;
+    border-right: none;
+    border-top: none;
+}
+
+.bottom-right {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+.hud-text {
+    position: absolute;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--neon-cyan);
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+
+.text-top-left {
+    top: 10px;
+    left: 50px;
+}
+
+.text-bottom-right {
+    bottom: 10px;
+    right: 50px;
+}
+
+.scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.1), transparent);
+    opacity: 0.1;
+    animation: scanMove 4s linear infinite;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+@keyframes scanMove {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+/* Scanline Overlay Static */
 body::after {
     content: "";
     position: fixed;
@@ -37,15 +248,13 @@ body::after {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0) 50%,
-            rgba(0, 0, 0, 0.1) 50%,
-            rgba(0, 0, 0, 0.1));
-    background-size: 100% 4px;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px);
     pointer-events: none;
     z-index: 1000;
-    opacity: 0.5;
 }
 
 a {
@@ -208,6 +417,22 @@ a {
     transition: all 0.3s ease;
     border: none;
     position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
@@ -218,22 +443,17 @@ a {
 
 .btn-primary:hover {
     background: #fff;
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), 0 0 50px rgba(0, 243, 255, 0.4);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
     background: transparent;
     color: var(--neon-cyan);
-    border: 1px solid var(--neon-cyan);
-    /* Clip path requires background to show shape, so we use box-shadow hack or full fill for border look? 
-       Actually standard border works fine, but clip-path cuts border. 
-       Let's use a background approach for "border". */
     background: linear-gradient(#050505, #050505) padding-box,
         linear-gradient(45deg, var(--neon-cyan), var(--neon-pink)) border-box;
     border: 2px solid transparent;
     clip-path: none;
-    /* Reset simpler border style for secondary */
     border-radius: 4px;
 }
 
@@ -241,6 +461,7 @@ a {
     background: rgba(0, 243, 255, 0.1);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
     color: #fff;
+    text-shadow: 0 0 8px var(--neon-cyan);
 }
 
 .scroll-indicator {

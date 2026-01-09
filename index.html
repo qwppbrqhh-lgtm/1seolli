@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="icon" href="avatar.jpg" type="image/jpeg">
@@ -18,7 +18,32 @@
 
 <body>
 
-    <main>
+    <div class="hud-overlay">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <div class="hud-text text-top-left">SYSTEM: ONLINE</div>
+        <div class="hud-text text-bottom-right">VER: 2.0.77</div>
+        <div class="scanline"></div>
+
+        <button id="sound-toggle" class="hud-btn">
+            <span class="material-icons-outlined">volume_off</span>
+        </button>
+    </div>
+
+    <!-- Boot Screen -->
+    <div id="boot-screen">
+        <div class="boot-container">
+            <div class="boot-logo">1SEOLLI // OS</div>
+            <div id="boot-text" class="boot-text"></div>
+            <div class="boot-progress">
+                <div class="boot-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content" class="hidden">
         <!-- Hero Section -->
         <section class="hero" id="home">
             <div class="hero-content">
