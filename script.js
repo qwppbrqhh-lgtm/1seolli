@@ -74,9 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Run Boot Sequence
-    runBootSequence();
-
     // 3D Tilt Effect
     document.addEventListener('mousemove', (e) => {
         const x = (window.innerWidth / 2 - e.pageX) / 25;
@@ -197,66 +194,4 @@ function initParticles() {
     }
 
     animate();
-}
-
-function runBootSequence() {
-    const bootScreen = document.getElementById('boot-screen');
-    const bootText = document.getElementById('boot-text');
-    const bootBar = document.querySelector('.boot-bar');
-    const mainContent = document.getElementById('main-content');
-
-    const lines = [
-        "INITIALIZING CORE SYSTEMS...",
-        "LOADING KERNEL 2.0.77...",
-        "CHECKING NEURAL LINK...",
-        "CONNECTING TO NETWORK... [SECURE]",
-        "DOWNLOADING ASSETS...",
-        "SYSTEM OPTIMIZED.",
-        "WELCOME, USER."
-    ];
-
-    let lineIndex = 0;
-
-    function typeLine() {
-        if (lineIndex >= lines.length) {
-            finishBoot();
-            return;
-        }
-
-        const p = document.createElement('div');
-        p.textContent = "> " + lines[lineIndex];
-        bootText.appendChild(p);
-        bootText.scrollTop = bootText.scrollHeight;
-
-        // Progress bar update
-        const progress = ((lineIndex + 1) / lines.length) * 100;
-        bootBar.style.width = `${progress}%`;
-
-        // Random typing sound
-        if (Math.random() > 0.5) sfx.playHoverSound();
-
-        lineIndex++;
-        setTimeout(typeLine, 300 + Math.random() * 400);
-    }
-
-    setTimeout(typeLine, 500);
-
-    function finishBoot() {
-        setTimeout(() => {
-            sfx.playBootSound();
-            bootScreen.style.opacity = '0';
-            bootScreen.style.pointerEvents = 'none';
-
-            mainContent.classList.remove('hidden');
-
-            // Allow scroll again
-            document.body.style.overflow = 'auto'; // (Actually CSS handles hidden on main, body scrolls)
-            // But we had #main-content.hidden { height: 0; overflow: hidden } 
-            // So removing .hidden fixes it.
-
-            setTimeout(() => {
-                bootScreen.style.display = 'none';
-            }, 1000);
-        }, 800);
-    }
 }

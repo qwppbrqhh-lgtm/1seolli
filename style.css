@@ -73,79 +73,10 @@ body {
     box-shadow: 0 0 10px var(--neon-cyan);
 }
 
-/* Boot Screen */
-#boot-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    z-index: 20000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Courier New', monospace;
-    color: var(--neon-cyan);
-}
-
-.boot-container {
-    width: 300px;
-    text-align: left;
-}
-
-.boot-logo {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--neon-cyan);
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.boot-text {
-    font-size: 0.8rem;
-    line-height: 1.5;
-    height: 150px;
-    overflow: hidden;
-    opacity: 0.8;
-    margin-bottom: 20px;
-    white-space: pre-wrap;
-}
-
-.boot-progress {
-    width: 100%;
-    height: 2px;
-    background: #111;
-    position: relative;
-    overflow: hidden;
-}
-
-.boot-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%;
-    background: var(--neon-cyan);
-    box-shadow: 0 0 10px var(--neon-cyan);
-    transition: width 0.1s linear;
-}
-
 /* Main Content Visibility */
 #main-content {
     opacity: 1;
-    transition: opacity 2s ease-in;
     filter: blur(0);
-}
-
-#main-content.hidden {
-    opacity: 0;
-    filter: blur(10px);
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
-    /* Prevent scrolling during boot */
 }
 
 /* 3D Tilt Context */
